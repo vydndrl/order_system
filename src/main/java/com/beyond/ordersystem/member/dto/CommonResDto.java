@@ -1,4 +1,4 @@
-package com.beyond.ordersystem.common.dto;
+package com.beyond.ordersystem.member.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
