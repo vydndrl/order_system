@@ -29,6 +29,10 @@ public class Product extends BaseTimeEntity {
         this.imagePath = imagePath;
     }
 
+    public void updateStockQuantity(int quantity) {
+        this.stockQuantity = this.stockQuantity - quantity;
+    }
+
     public ProductResDto fromEntity() {
         return ProductResDto.builder()
                 .id(this.id)

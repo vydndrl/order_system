@@ -1,4 +1,4 @@
-package com.beyond.ordersystem.member.controller;
+package com.beyond.ordersystem.member.service;
 
 import com.beyond.ordersystem.member.dto.CommonErrorDto;
 import org.springframework.http.HttpStatus;
@@ -30,5 +30,11 @@ public class CommonExceptionHandler {
     public ResponseEntity<CommonErrorDto> validHandler(MethodArgumentNotValidException e) {
         CommonErrorDto commonErrorDto = new CommonErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         return new ResponseEntity<>(commonErrorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<CommonErrorDto> exceptionHandler(Exception e) {
+        CommonErrorDto commonErrorDto = new CommonErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(commonErrorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
