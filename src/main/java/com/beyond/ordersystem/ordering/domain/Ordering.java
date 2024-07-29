@@ -50,4 +50,8 @@ public class Ordering {
                 .build();
         return orderListResDto;
     }
+
+    public void delete() {
+        this.orderStatus = OrderStatus.CANCLED;
+    }
 }

@@ -26,7 +26,7 @@ public class MemberSaveReqDto {
     private String password;
     private Address address;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.USER;
 //    private PasswordEncoder passwordEncoder;
 
     public Member toEntity(String password) {
@@ -35,7 +35,7 @@ public class MemberSaveReqDto {
                 .email(this.email)
                 .password(password)
                 .address(this.address)
-                .role(Role.USER)
+                .role(this.role)
                 .build();
     }
 }

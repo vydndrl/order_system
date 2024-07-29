@@ -29,12 +29,6 @@ public class JwtAuthFilter extends GenericFilter {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
-    private final HttpServletResponse httpServletResponse;
-
-    public JwtAuthFilter(HttpServletResponse httpServletResponse) {
-        this.httpServletResponse = httpServletResponse;
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String bearerToken = ((HttpServletRequest)request).getHeader("Authorization");
@@ -65,7 +59,6 @@ public class JwtAuthFilter extends GenericFilter {
             httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             httpServletResponse.setContentType("application/json");
             httpServletResponse.getWriter().write("token 에러");
-            
         }
     }
 }

@@ -16,6 +16,12 @@ public class JwtToKenProvider {
     @Value("${jwt.expiration}")
     private int expiration;
 
+    @Value("${jwt.secretKeyRt}")
+    private String secretKeyRt;
+
+    @Value("${jwt.expirationRt}")
+    private int expirationRt;
+
     public String createToken(String email, String role) {
 //        claims는 사용자정보 (페이로드 정보)
         Claims claims = Jwts.claims().setSubject(email);
@@ -24,9 +30,23 @@ public class JwtToKenProvider {
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now) // 생성시간
-                .setExpiration(new Date(now.getTime() + 30 * 60 * 1000L)) // 만료시간 : 30분
+                .setExpiration(new Date(now.getTime() + expiration * 60 * 1000L)) // 만료시간 : 30분
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
-        return null;
+        return token;
+    }
+
+    public String createRefreshToken(String email, String role) {
+//        claims는 사용자정보 (페이로드 정보)
+        Claims claims = Jwts.claims().setSubject(email);
+        claims.put("role", role);
+        Date now = new Date();
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now) // 생성시간
+                .setExpiration(new Date(now.getTime() + expirationRt * 60 * 1000L)) // 만료시간 : 30분
+                .signWith(SignatureAlgorithm.HS256, secretKeyRt)
+                .compact();
+        return token;
     }
 }
