@@ -4,7 +4,6 @@ import com.beyond.ordersystem.member.dto.CommonResDto;
 import com.beyond.ordersystem.product.domain.Product;
 import com.beyond.ordersystem.product.dto.ProductResDto;
 import com.beyond.ordersystem.product.dto.ProductSaveReqDto;
-import com.beyond.ordersystem.product.repository.ProductRepository;
 import com.beyond.ordersystem.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,7 +30,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/product/create")
     public ResponseEntity<Object> createProduct(ProductSaveReqDto dto) {
-        Product product = productService.productAwsCreate(dto);
+        Product product = productService.productCreate(dto);
         CommonResDto commonResDto = new CommonResDto(HttpStatus.CREATED, "product is successfully created", product.getId());
         return new ResponseEntity<>(commonResDto, HttpStatus.CREATED);
     }

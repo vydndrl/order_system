@@ -41,4 +41,25 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }
+
+    @Bean
+    @Qualifier("3")
+    public RedisConnectionFactory stockFactory() {
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        configuration.setHostName(host);
+        configuration.setPort(port);
+        configuration.setDatabase(2);
+//        2번 DB 사용
+        return new LettuceConnectionFactory(configuration);
+    }
+    @Bean
+    @Qualifier("3")
+    public RedisTemplate<String, Object> stockRedisTemplate(@Qualifier("3") RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        return redisTemplate;
+    }
+
 }
